@@ -10,4 +10,4 @@ def calcDataSignature(filename):
             result.append(int(line[j]));
     return np.array(result);
 
-print (calcDataProperty('data/digits/testDigits/0_1.txt').shape);
+print (calcDataSignature('data/digits/testDigits/0_1.txt').shape);
