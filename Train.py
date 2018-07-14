@@ -29,5 +29,3 @@ def classify(currentFeature, featureSet, labels, K):
             ans = key;
     return ans;
 
-
-print (calcDataSignature('data/digits/testDigits/0_1.txt').shape);
