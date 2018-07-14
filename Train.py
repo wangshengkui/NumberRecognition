@@ -1,5 +1,6 @@
 import numpy as np
-
+from os.path import dirname, join, basename
+from glob import glob
 
 def calcDataSignature(filename):
     result = [];
@@ -12,7 +13,7 @@ def calcDataSignature(filename):
 
 def classify(currentFeature, featureSet, labels, K):
     numsOfDatas = featureSet.shape[0];
-    curdataSet = np.repeat(currentFeature, numsOfDatas, axis = 0) - featureSet;
+    curdataSet = np.tile(currentFeature, (numsOfDatas, 1)) - featureSet;
     distance = curdataSet ** 2;
     distanceSum = distance.sum(axis = 1); # calculate the eculid distance
     distanceSum = distanceSum ** (0.5);
@@ -28,4 +29,35 @@ def classify(currentFeature, featureSet, labels, K):
             curMax = weight[key];
             ans = key;
     return ans;
+
+def predict(filename, featureSet, labels, K):
+    sign = calcDataSignature(filename);
+    return classify(sign, featureSet, labels, K);
+
+def initFeatureSet():
+    cnt = 0;
+    labels = [];
+    featureSet = [];
+    for i in glob(join(dirname(__file__) + '/data/digits/trainingDigits', '*.txt')):
+        fileName = i.split('\\')[1].split('.')[0];
+        labels.append(int(fileName.split('_')[0]));
+        featureSet.append(calcDataSignature(i));
+
+    return np.array(featureSet), labels;
+
+
+featureSet, labels = initFeatureSet();
+mK = 3;
+errors = 0;
+total = 0;
+for i in glob(join(dirname(__file__) + '/data/digits/testDigits', '*.txt')):
+    predictedRes = predict(i, featureSet, labels, mK);
+    fileName = i.split('\\')[1].split('.')[0];
+    actual = int(fileName.split('_')[0]);
+    print("predict value %d, actual value %d" % (predictedRes, actual));
+    total = total + 1;
+    if predictedRes != actual:
+        errors = errors + 1;
+
+print("total %d    errors %d" % (total, errors));
 
