@@ -78,13 +78,10 @@ class Menu:
     def __init__(self, screen):
         self.screen = screen
         self.brush = None
-
-        # 两种笔刷的按钮图标
         self.pens = [
-            pygame.image.load("images/images/eraser.png").convert_alpha(),
+            #pygame.image.load("images/images/eraser.png").convert_alpha(),
             pygame.image.load("images/images/calculate.png").convert_alpha(),
         ]
-        # 计算坐标，便于绘制
         self.pens_rect = []
         for (i, img) in enumerate(self.pens):
             rect = pygame.Rect(10, 10 + i * 64, 64, 64)
@@ -93,7 +90,6 @@ class Menu:
 
     def set_brush(self, brush):
         self.brush = brush
-        # 绘制菜单栏
 
     def draw(self):
         for (i, img) in enumerate(self.pens):
@@ -103,26 +99,22 @@ class Menu:
         # 定义菜单按钮的点击响应
 
     def click_button(self, pos):
-        # 笔刷
-        for (i, rect) in enumerate(self.pens_rect):
-            if rect.collidepoint(pos):
-                self.brush.set_brush_style(bool(i))
-                return True
-        # 笔刷大小
-
-
-        return False
+        newimg = pygame.transform.chop(self.screen, pygame.Rect(74, 0, 320, 320))
+        #newimg = pygame.transform.scale(newimg, (100, 100))
+        pygame.image.save(newimg, "digit" + str(1) + ".png")
+        return True
 class Painter:
     def __init__(self):
-        self.screen = pygame.display.set_mode((320, 320))
+        self.screen = pygame.display.set_mode((320 + 74, 320))
         pygame.display.set_caption("Painter")
         self.clock = pygame.time.Clock()
         self.brush = Brush(self.screen)
         self.brush.set_brush_style(False);
-        #self.brush.set_size(10);
+        self.brush.set_size(10);
         self.menu = Menu(self.screen)
         self.menu.set_brush(self.brush)
-
+    def __del__(self):
+        pass;
     def run(self):
         self.screen.fill((255, 255, 255))
         while True:
