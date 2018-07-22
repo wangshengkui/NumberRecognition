@@ -99,8 +99,8 @@ class Menu:
         # 定义菜单按钮的点击响应
 
     def click_button(self, pos):
-        newimg = pygame.transform.chop(self.screen, pygame.Rect(74, 0, 320, 320))
-        #newimg = pygame.transform.scale(newimg, (100, 100))
+        newimg = self.screen.subsurface(pygame.Rect(74, 0, 320, 320)).copy();
+        newimg = pygame.transform.scale(newimg, (100, 100))
         pygame.image.save(newimg, "digit" + str(1) + ".png")
         return True
 class Painter:
