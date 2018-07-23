@@ -38,7 +38,7 @@ def initFeatureSet():
     cnt = 0;
     labels = [];
     featureSet = [];
-    for i in glob(join(dirname(__file__) + '/data/digits/trainingDigits', '*.txt')):
+    for i in glob(join('./data/digits/trainingDigits', '*.txt')):
         fileName = i.split('\\')[1].split('.')[0];
         labels.append(int(fileName.split('_')[0]));
         featureSet.append(calcDataSignature(i));
@@ -46,18 +46,18 @@ def initFeatureSet():
     return np.array(featureSet), labels;
 
 
-featureSet, labels = initFeatureSet();
-mK = 3;
-errors = 0;
-total = 0;
-for i in glob(join(dirname(__file__) + '/data/digits/testDigits', '*.txt')):
-    predictedRes = predict(i, featureSet, labels, mK);
-    fileName = i.split('\\')[1].split('.')[0];
-    actual = int(fileName.split('_')[0]);
-    print("predict value %d, actual value %d" % (predictedRes, actual));
-    total = total + 1;
-    if predictedRes != actual:
-        errors = errors + 1;
-
-print("total %d    errors %d" % (total, errors));
+# featureSet, labels = initFeatureSet();
+# mK = 3;
+# errors = 0;
+# total = 0;
+# for i in glob(join(dirname(__file__) + '/data/digits/testDigits', '*.txt')):
+#     predictedRes = predict(i, featureSet, labels, mK);
+#     fileName = i.split('\\')[1].split('.')[0];
+#     actual = int(fileName.split('_')[0]);
+#     print("predict value %d, actual value %d" % (predictedRes, actual));
+#     total = total + 1;
+#     if predictedRes != actual:
+#         errors = errors + 1;
+#
+# print("total %d    errors %d" % (total, errors));
 

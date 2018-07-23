@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 import math
-
+import processFile
 
 class Brush:
     def __init__(self, screen):
@@ -100,8 +100,9 @@ class Menu:
 
     def click_button(self, pos):
         newimg = self.screen.subsurface(pygame.Rect(74, 0, 320, 320)).copy();
-        newimg = pygame.transform.scale(newimg, (100, 100))
+        newimg = pygame.transform.scale(newimg, (32, 32))
         pygame.image.save(newimg, "digit" + str(1) + ".png")
+        print (processFile.recognize('digit1.png'))
         return True
 class Painter:
     def __init__(self):
@@ -110,7 +111,7 @@ class Painter:
         self.clock = pygame.time.Clock()
         self.brush = Brush(self.screen)
         self.brush.set_brush_style(False);
-        self.brush.set_size(10);
+        self.brush.set_size(14);
         self.menu = Menu(self.screen)
         self.menu.set_brush(self.brush)
     def __del__(self):
